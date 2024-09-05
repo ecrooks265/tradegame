@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block title %}Home - Trading Game{% endblock %}
+
+{% block content %}
+    <h1>Welcome Back, {{ user.username }}!</h1>
+    <div>
+        <a href="{% url 'leaderboard' %}">View Leaderboard</a> |
+        <a href="{% url 'profile' %}">View Profile Stats</a> |
+        <a href="{% url 'create_game' %}">Create a New Game</a>
+    </div>
+{% endblock %}

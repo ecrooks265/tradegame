@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block title %}Profile - Trading Game{% endblock %}
+
+{% block content %}
+    <h1>{{ profile.user.username }}'s Profile</h1>
+    <p>Points: {{ profile.points }}</p>
+    <p>Level: {{ profile.level }}</p>
+    <p>Gains: {{ profile.gains }}</p>
+    <p>Losses: {{ profile.losses }}</p>
+    <a href="{% url 'dashboard' %}">Back to Dashboard</a>
+{% endblock %}

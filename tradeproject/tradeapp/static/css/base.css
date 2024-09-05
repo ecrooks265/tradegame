@@ -1,0 +1,76 @@
+/* Import the blocky font from Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Anton&display=swap');
+
+/* Apply global styles */
+body {
+    font-family: 'Anton', sans-serif;
+    color: #e0e0e0; /* Light grey text color for contrast */
+    background-color: #121212; /* Dark background color */
+    margin: 0;
+    padding: 0;
+    text-align: center; /* Center align all text */
+}
+
+/* Center and space out main content */
+main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 80vh; /* Ensure the content takes up most of the viewport height */
+    padding: 20px;
+}
+
+header, footer {
+    padding: 10px;
+    background-color: #1e1e1e; /* Slightly lighter dark background for header and footer */
+}
+
+header {
+    border-bottom: 2px solid #333; /* Optional border for separation */
+}
+
+footer {
+    border-top: 2px solid #333; /* Optional border for separation */
+}
+
+a {
+    color: #1e90ff; /* Bright color for links */
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline; /* Underline links on hover */
+}
+
+button {
+    background-color: #1e90ff; /* Bright button color */
+    color: #ffffff; /* White text on buttons */
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 5px; /* Rounded corners for buttons */
+}
+
+button:hover {
+    background-color: #4682b4; /* Darker blue on hover */
+}
+
+form {
+    max-width: 600px; /* Limit the form width */
+    margin: 0 auto; /* Center the form */
+}
+
+input[type="text"], input[type="email"], input[type="password"], button {
+    width: 100%; /* Full-width inputs and buttons */
+    margin: 10px 0; /* Space between form elements */
+    padding: 10px;
+    border: 1px solid #333; /* Border color matching the theme */
+    border-radius: 5px; /* Rounded corners for inputs */
+}
+
+input[type="text"], input[type="email"], input[type="password"] {
+    background-color: #1e1e1e; /* Dark background for inputs */
+    color: #e0e0e0; /* Light text color for inputs */
+}

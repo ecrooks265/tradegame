@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block title %}Leaderboard - Trading Game{% endblock %}
+
+{% block content %}
+    <h1>Leaderboard</h1>
+    <ul>
+        {% for entry in leaderboards %}
+            <li>{{ entry.profile.user.username }} - {{ entry.total_points }} points</li>
+        {% endfor %}
+    </ul>
+    <a href="{% url 'dashboard' %}">Back to Dashboard</a>
+{% endblock %}

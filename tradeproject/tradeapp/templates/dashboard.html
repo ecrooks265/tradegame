@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block title %}Dashboard - Trading Game{% endblock %}
+
+{% block content %}
+    <h1>Welcome, {{ profile.user.username }}</h1>
+    <p>Level: {{ profile.level }}</p>
+    <h2>Your Rounds</h2>
+    <ul>
+        {% for round in rounds %}
+            <li>Round ID: {{ round.id }} - Player 1: {{ round.player1.user.username }} - Player 2: {{ round.player2.user.username }}</li>
+        {% endfor %}
+    </ul>
+    <a href="{% url 'trade' %}">Trade</a> |
+    <a href="{% url 'leaderboard' %}">Leaderboard</a> |
+    <a href="{% url 'profile' %}">Profile</a> |
+    <a href="{% url 'logout' %}">Logout</a>
+{% endblock %}

@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block title %}Sign Up - Trading Game{% endblock %}
+
+{% block content %}
+    <h1>Sign Up</h1>
+    <form method="post">
+        {% csrf_token %}
+        <h2>User Details</h2>
+        {{ user_form.as_p }}
+        
+        <button type="submit">Sign Up</button>
+    </form>
+    <a href="{% url 'home' %}">Back to Home</a>
+{% endblock %}
