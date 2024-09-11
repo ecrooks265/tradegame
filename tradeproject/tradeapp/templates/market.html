@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+
+{% block title %}Simulated Market{% endblock %}
+
+{% block content %}
+<h1>Simulated Market</h1>
+<table>
+    <thead>
+        <tr>
+            <th>Stock</th>
+            <th>Price</th>
+        </tr>
+    </thead>
+    <tbody id="stock-table-body">
+        {% for stock in stocks %}
+        <tr>
+            <td>{{ stock.name }}</td>
+            <td>${{ stock.price }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<script>
+    // Periodically update the market data
+    function updateMarketData() {
+        fetch("{% url 'market_update' %}")
+            .then(response => response.json())
+            .then(data => {
+                const tableBody = document.getElementById('stock-table-body');
+                tableBody.innerHTML = '';
+                data.forEach(stock => {
+                    const row = document.createElement('tr');
+                    const nameCell = document.createElement('td');
+                    const priceCell = document.createElement('td');
+                    nameCell.textContent = stock.name;
+                    priceCell.textContent = `$${stock.price}`;
+                    row.appendChild(nameCell);
+                    row.appendChild(priceCell);
+                    tableBody.appendChild(row);
+                });
+            })
+            .catch(error => console.error('Error fetching market data:', error));
+    }
+
+    // Update every 5 seconds
+    setInterval(updateMarketData, 5000);
+</script>
+
+{% endblock %}

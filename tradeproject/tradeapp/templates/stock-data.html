@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block title %}Stock Data{% endblock %}
+
+{% block content %}
+    <h1>About Stocks</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Stock</th>
+                <th>Price</th>
+                <th>Sentiment</th>
+                <th>Bullish Predictor</th>
+                <th>Bearish Predictor</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for stock in stocks %}
+                <tr>
+                    <td>{{ stock.name }}</td>
+                    <td>${{ stock.price }}</td>
+                    <td>{{ stock.sentiment_score }}</td>
+                    <td>{% if stock.bullish_predictor %}Yes{% else %}No{% endif %}</td>
+                    <td>{% if stock.bearish_predictor %}Yes{% else %}No{% endif %}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

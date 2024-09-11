@@ -2,8 +2,10 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import AuthenticationForm
+from django.http import JsonResponse
 from .models import Profile, Round, Leaderboard
 from .forms import *
+from .tools import update_all_stock_sentiments
 
 def home(request):
     if request.user.is_authenticated:
@@ -79,3 +81,14 @@ def create_game(request):
         form = GameCreationForm()
 
     return render(request, 'create-game.html', {'form': form})
+
+def market_view(request):
+    """View to manually trigger market updates (for testing purposes)."""
+    update_all_stock_sentiments()
+    stocks = Stock.objects.all()
+    return render(request, 'market/market_update.html', {'stocks': stocks})
+
+def market_update(request):
+    """Updates the market state and returns the updated stock data."""
+    stocks = Stock.objects.values('name', 'price')
+    return JsonResponse(list(stocks), safe=False)

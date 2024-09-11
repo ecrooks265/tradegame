@@ -1,9 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
-
-from django.db import models
-from django.contrib.auth.models import User
 from django.utils import timezone
+import random
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
@@ -156,3 +154,53 @@ class Game(models.Model):
 
     def __str__(self):
         return self.name
+
+class Stock(models.Model):
+    name = models.CharField(max_length=10)  # e.g., 'AAPL'
+    price = models.DecimalField(max_digits=10, decimal_places=2)
+    sector = models.CharField(max_length=10, choices=SECTORS)
+    volatility = models.DecimalField(max_digits=4, decimal_places=2, default=0.10)  # Volatility factor
+    growth_rate = models.DecimalField(max_digits=4, decimal_places=2, default=0.05)  # Expected growth rate
+    market_trend_influence = models.DecimalField(max_digits=4, decimal_places=2, default=0.03)  # Sensitivity to market trends
+    company_performance = models.DecimalField(max_digits=4, decimal_places=2, default=1.0)  # Performance indicator
+    sentiment_score = models.DecimalField(max_digits=4, decimal_places=2, default=0.0)  # Sentiment score (-1 to 1, where -1 is very negative, 1 is very positive)
+    bullish_predictor = models.BooleanField(default=False)  # Indicates if the stock is predicted to be bullish
+    bearish_predictor = models.BooleanField(default=False)  # Indicates if the stock is predicted to be bearish
+
+    def update_price(self, market_trend=0):
+        """
+        Simulate a price update considering stock-specific factors, market trends,
+        and sentiment analysis.
+        """
+        # Base change due to volatility
+        base_change = random.uniform(-self.volatility, self.volatility)
+
+        # Influence of overall market trends
+        trend_influence = market_trend * self.market_trend_influence
+
+        # Influence of company-specific performance
+        performance_influence = self.growth_rate * self.company_performance
+
+        # Influence of sentiment
+        sentiment_influence = self.sentiment_score * 0.05  # Adjust multiplier as needed
+
+        # New price calculation
+        self.price *= (1 + base_change + trend_influence + performance_influence + sentiment_influence)
+        self.price = max(self.price, 1.00)  # Ensure price doesn't go below 1.00
+        self.save()
+
+    def update_sentiment(self):
+        """
+        Simulate sentiment score updates, which could be derived from external
+        news sources or other factors in a real-world scenario.
+        """
+        # Randomly adjust sentiment score within a realistic range
+        self.sentiment_score = random.uniform(-1, 1)  # Range from -1 to 1
+
+        # Set bullish or bearish predictors based on sentiment
+        self.bullish_predictor = self.sentiment_score > 0.5
+        self.bearish_predictor = self.sentiment_score < -0.5
+        self.save()
+
+    def __str__(self):
+        return f"{self.name} - ${self.price}"
